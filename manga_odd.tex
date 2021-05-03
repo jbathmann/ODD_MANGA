@@ -1,63 +1,89 @@
-\documentclass[manusscript, 12p, authoryear]{elsarticle}
-\usepackage{setspace}
-\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
-\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
-%\geometry{landscape}                % Activate for for rotated page geometry
-%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
-%% The lineno packages adds line numbers. Start line numbering with
-%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
-%% for the whole article with \linenumbers after \end{frontmatter}.
-\setlength{\parindent}{0in}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{siunitx}
-\usepackage{textcomp}
-\usepackage{epstopdf}
-%\usepackage{lineno}
-\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
-\usepackage{color}
-\usepackage{url}
-\usepackage{wasysym}
-%comments
-\usepackage{color}
-\newcommand{\MWComment}[1]{{\small\color{green} #1}}
-\newcommand{\TFComment}[1]{{\small\color{blue} #1}}
-\newcommand{\JBComment}[1]{{\small\color{red} #1}}
-\newcommand{\NDComment}[1]{{\small\color{orange} #1}}
+%\documentclass[manusscript, 12p, authoryear]{elsarticle}
+%\usepackage{setspace}
+%\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+%\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%%\geometry{landscape}                % Activate for for rotated page geometry
+%%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+%%% The lineno packages adds line numbers. Start line numbering with
+%%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%%% for the whole article with \linenumbers after \end{frontmatter}.
+%\setlength{\parindent}{0in}
+%\usepackage{graphicx}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\usepackage{siunitx}
+%\usepackage{textcomp}
+%\usepackage{epstopdf}
+%%\usepackage{lineno}
+%\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+%\usepackage{color}
+%\usepackage{url}
+%\usepackage{wasysym}
+%%comments
+%\usepackage{color}
+%\newcommand{\MWComment}[1]{{\small\color{green} #1}}
+%\newcommand{\TFComment}[1]{{\small\color{blue} #1}}
+%\newcommand{\JBComment}[1]{{\small\color{red} #1}}
+%\newcommand{\NDComment}[1]{{\small\color{orange} #1}}
+%
+%\title{Supplementary Material\\The MANgrove-GroundwAter feedback model (MANGA) \\ ODD - Protocol}
+%
+%
+%\author[1,2]{Jasper Bathmann\corref{cor1}%
+%}
+%\ead{Jasper.Bathmann@ufz.de}
+%\author[3]{Ronny Peters}
+%\author[1]{Dmitri Naumov}
+%\author[1]{Thomas Fischer}
+%\author[3]{Uta Berger}
+%\author[1,2]{Marc Walther}
+%
+%\cortext[cor1]{Corresponding author: Jasper.Bathmann@ufz.de}
+%
+%\address[1]{Department of Environmental Informatics, UFZ, Permoserstra\ss e 15, 04318 Leipzig, Germany}
+%\address[2]{Institute for Groundwater Management, Technische Universit\"at Dresden, 01069 Dresden, Germany}
+%\address[3]{Institute of Forest Growth and Forest Computer Sciences, Technische Universit\"at Dresden, 01069 Dresden, Germany}
+%
+%\journal{Ecological Modelling}
+%\date{January 2019}                                           % Activate to display a given date or no date
+In the following chapter, the ODD for the MANGA model is presented.
+Motivation and general derivation of the model are provided in the course of this thesis, but this chapter is following the standard protocol for code documentation in individual-based models \citep{Grimm2020}.
 
-\title{Supplementary Material\\The MANgrove-GroundwAter feedback model (MANGA) \\ ODD - Protocol}
 
+    \section{Bibliographic Information}
+    % The package biblatex which supports \fullcite collides with the package multibbl
+    % I have not found a solution how to print a bib item in the text so I write it out.
+    % If you find a solution, please, post it here: https://tex.stackexchange.com/questions/173935
+%
+%
+%\bibentry{Fischer2019}
+\textbf{BIBENTRY FEHLT!}
+    
+\section{Author's contribution}
+%\author[1]{Thomas Fischer}
+%\author[1,2]{Jasper Bathmann}
+%\author[1]{Dmitri Naumov}
+%\author[1,3]{Fabien Magri}
+%\author[1,2]{Marc Walther}
+%\author[1,2]{Olaf Kolditz}
+The author JB contributed to all parts of the article presented below.
+The author drafted the text and derived the equation system of the text and coordinated the revision and editing process with the co-authors. Furthermore, the author implemented the presented model and coordinated further joint code developments, version control and code review processes.
+    
+    \section{Copyright Notice}
+    
+    \textbf{DOI FEHL!}
+    \copyright 2020 Elsevier B.V. 
+    
+    The following is an near verbatim version of the supplementary materials of the accepted article published in Agricultural and Forest Meteorology (\href{https://doi.org/10.1016/j.ecolmodel.2020.108973}{doi:10.1016/j.ecolmodel.2020.108973}). The publisher ELSEVIER grants the Author the right to ``Include [the article] in a thesis or dissertation (provided this is not published commercially)'' \footnote{\href{https://www.elsevier.com/about/policies/copyright}{https://www.elsevier.com/about/policies/copyright; last accessed 20.04.2021}}.    
+    \clearpage
+    
 
-\author[1,2]{Jasper Bathmann\corref{cor1}%
-}
-\ead{Jasper.Bathmann@ufz.de}
-\author[3]{Ronny Peters}
-\author[4]{Ruth Reef}
-\author[3]{Uta Berger}
-\author[1,2]{Marc Walther}
-\author[5]{Catherine E. Lovelock}
-
-\cortext[cor1]{Corresponding author: Jasper.Bathmann@ufz.de}
-
-\address[1]{Department of Environmental Informatics, UFZ, Permoserstra\ss e 15, 04318 Leipzig, Germany}
-\address[2]{Institute for Groundwater Management, Technische Universit\"at Dresden, 01069 Dresden, Germany}
-\address[3]{Institute of Forest Growth and Forest Computer Sciences, Technische Universit\"at Dresden, 01069 Dresden, Germany}
-\address[4]{School of Earth Atmosphere and Environment, MONASH University, Clayton VIC 3800, Australia}
-\address[5]{School of Biological Sciences, The University of Queensland, St Lucia QLD 4072, Australia}
-
-\journal{Agricultural Forest Meteorology}
-\date{April 2021}                                           % Activate to display a given date or no date
-
-\begin{document}
-\maketitle 
-This document is a standard ODD protocol for agent-based model documentation following the description in \citet{Grimm2020}.
-\tableofcontents
-\section*{Overview}
-\addcontentsline{toc}{section}{Overview}  
-\section{Purpose and Patterns}
-Characteristic mangrove growth form structures and species zonation patterns along transects in the intertidal zone are observed.
-To study how those patterns interact with groundwater salinity and depend on abiotic hydrological boundary conditions, MANGA is introduced.
+\subsection{The pyMANGA ODD }
+This chapter is a standard ODD protocol for agent-based model documentation following the description in \citet{Grimm2020}.
+\subsection{Overview}
+\subsubsection{Purpose and Patterns}
+Characteristic mangrove growth form structures and species zonation patterns along transects in the intertidal zone are observed. 
+To study how those patterns depend on groundwater salinity, MANGA is introduced.
 It is an agent-based mangrove stand dynamics model which couples the single-tree model BETTINA \citep{Ronny2014} for tree growth dynamics and the subsurface hydrodynamic model OpenGeoSys (www.opengeosys.org).
 The purpose of the coupled model is to analyze and understand the two-way feedback between porewater salinity and tree (fresh-)water use.
 From abiotic boundary conditions like groundwater gradients and salt dilution by tidal water, emerge vegetation patterns like zonation of species composition or allometric manifestation of the trees (i.e.~dwarfing).
@@ -66,7 +92,7 @@ Additionally, the spatial and temporal groundwater salinity distribution can be 
 
 
 
-\section{Entities, state variables and scales}
+\subsection{Entities, state variables and scales}
 The MANGA model is using two already existing models as components.
 The process variables and scales can be classified in two distinct levels.
 
@@ -76,7 +102,7 @@ Porewater salinity dynamics are calculated with OpenGeoSys (www.opengeosys.org).
 \textit{Land} is the name for this level.
 
 The two levels differ in time stepping and spatial scales as well as in their state variables and will be described in detail below.
-\subsection{Flora}
+\subsubsection{Flora}
 The \textit{flora} consists of individual trees - the entities which are used as agents.
 Every entity within the population is described by its static position ($x$, $y$), static species, dynamic age and dynamic allometry.
 Allometry information includes stem radius, stem height, root radius and crown radius.
@@ -107,15 +133,15 @@ $\vec{r}$ & tree position  &   \\
 \caption{State variables of individual trees.
 All listed variables are floating point numbers.}\label{tab_bettina_variables}
 \end{table}
-\subsection{Land}
+\subsubsection{Land}
 The \textit{land} is representing the soil on which trees grow.
 Two scalar variables, porewater salinity and hydrostatic pressure, are defined on a three dimensional abiotic aquifer system and one 3 dimensional vector field of secondary variables represents the Darcy velocity.
 Considered aquifer depths are in the range of $\mathrm{m}$, corresponding to the depth of subsurface layers with relatively high water permeability.
 The horizontal system extension can range from $\mathrm{m^2}$ to $\mathrm{km^2}$ but must be larger or equal than the \textit{flora} extension in order to allow to study tree population dynamics.
 The abiotic processes are simulated on timescales ranging from \SI{1e-2}{s} to \SI{1e5}{s} depending on the rate of change in variables.
 
-\section{Process Overview and Scheduling}
-\subsection{Model Components} 
+\subsection{Process Overview and Scheduling}
+\subsubsection{Model Components} 
 Two independent models, BETTINA for \textit{flora} and OpenGeoSys for \textit{land}, are coupled.
 The information of state variables and parameters of \textit{flora} is passed to OpenGeoSys with the time stepping from the \textit{flora} model.
 The \textit{land} model uses this information to dynamically update the \textit{flora's} influence on the abiotic processes, namely fresh water flow from the aquifer into the plants (i.e.~plant water uptake).
@@ -131,11 +157,12 @@ Consequently, long time simulations are performed using the iteration over the s
 \item OpenGeoSys calculations.
 
 \end{enumerate}
-\subsection{Flora}
+
+\subsubsection{Flora}
 Dynamics on the \textit{flora} level are described by four sub-models.
 A sketch of BETTINA inherent plant dynamics is given in Figure \ref{fig_bettina_sketch}.
 \begin{figure}[h]\centering
-\includegraphics[width=.8\textwidth]{bettina_sketch.png} 
+\includegraphics[width=.8\textwidth]{ODD_MANGA/bettina_sketch.png} 
 \caption{Sketch of iteration cycle for \textit{flora} dynamics modelled with BETTINA. Illustration is adapted from \citet{Ronny2014}--(supplementary material).}\label{fig_bettina_sketch}
 \end{figure} 
 
@@ -155,13 +182,14 @@ At each time step all four sub models are applied in a sequence (see sub-models 
 \end{enumerate}
 Beside the porewater salinity distribution, the sub-models depend on species-specific parameters such as minimal leaf water potential, sap flow conductivity (xylem conductivity), fine root permeability, a geometrical factor for fine root surface per area of root extension, maintenance factor, ratio of available resources used for production of new biomass, and photosynthesis energy efficiency (light-water-ratio), and three factors describing the tendency for equilibria in (i) resource uptake, (ii) flow resistances and (iii) tree crown and root disk size.
 Those parameters will be explained in detail in the sub-model section.
-\subsection{Land}
+\subsubsection{Land}
 The abiotic subsurface processes are described by solving a system of PDEs on a grid with OpenGeoSys (www.opengeosys.org).
 The equations describing the system dynamics consist of one equation describing the total groundwater mass flow and one describing the subsurface salinity mass flow.
+
 System boundary conditions, temporal resolution and the method to solve the equations are also provided within project files.
 The tree entities provide additional source terms in the root zone, which depend on state variables and parameters of the \textit{flora}, controlling the water uptake of the trees (see belowground resource uptake).
-\section{Design Concepts}
-\subsection{Basic Principles}
+\subsection{Design Concepts}
+\subsubsection{Basic Principles}
 In tree dynamics described on the \textit{flora} level, the considered resources are restricted to light (above-ground) and water (below-ground).
 The model describes resource uptake and growth mechanistically.
 The resource uptake depends on the allometric measures of the plant.
@@ -182,25 +210,26 @@ Further, porewater density is regarded as a function of pressure and porewater s
 The porewater is taken as incompressible with constant dynamic viscosity.
 The interfacial drag term of momentum exchange is approximated up to the 2nd order in bulk flow velocity.
 Within the momentum balance, inertia is neglected and forces are regarded up to linear order in bulk velocity.
-\subsection{Emergence}
+\subsubsection{Emergence}
 The features at the plant population level, i.e.~zonation patterns regarding species distribution and tree allometry, mortality and maximum tree height, emerge from the individual growth and death.
 These features are influenced by resource availability due to the spatial temporal groundwater salinity redistribution and competition for sunlight with neighbors.\\
 On the \textit{land} level in turn, groundwater salinity distributions are emerging from the model.
 It is influenced by the plant distribution and abiotic parameters such as hydraulic conductivity and aquifer depth.
-\subsection{Adaption}
+\subsubsection{Adaption}
 Individual trees adapt to environmental conditions by growth allocation, in order to optimize resource uptake.
 For example, a tree with a canopy shadowed by other trees, allocates most of its resources into growth of crown radius and stem height.
-\subsection{Objectives}
+\subsubsection{Objectives}
 Trees follow no objectives apart from individual growth under the constraint of maximized resource uptake.
-\subsection{Learning}
+\subsubsection{Learning}
 Learning of agents is not implemented.
 However, individual trees adapt to environmental conditions (see adaption).
-\subsection{Prediction}
+\subsubsection{Prediction}
 Prediction of future conditions by individuals is not implemented.
-\subsection{Sensing}
+\subsubsection{Sensing}
 Individuals within the \textit{flora} get information on the locally available resources.
-Resource availability results from the interactions and competition within the local neighborhood and the porewater salinity distribution.
-\subsection{Interaction}
+
+Resource availability is results from the interactions and competition within the local neighborhood and the porewater salinity distribution.
+\subsubsection{Interaction}
 Individual trees compete for sunlight.
 This competition is described in a simplified manner using a modified ZOI competition concept. 
 Competition is assumed to be completely asymmetric.
@@ -208,32 +237,36 @@ Competition strength is determined by tree height and the size of the ZOI is giv
 At locations, where a tree is the highest, this individual takes all available energy.
 
 Competition for belowground resources is emerging from the subsurface flow and dilution processes.
-\subsection{Stochasticity}
+\subsubsection{Stochasticity}
 Within the MANGA model, stochasticity is limited to the initial seedling distribution and positioning of new seedlings (recruitment).
+
 Further stochasticity can be incorporated by stochastic boundary conditions, e.g. the representation of rarely occurring extreme weather events such as hurricanes.
-\subsection{Collectives}
+\subsubsection{Collectives}
 Tree entities can be arbitrarily grouped in any kind of collective at the stage of model initialization. 
 However, each tree group can be associated to a sub-domain of the model area, where it is allowed to grow.
 Additionally, for each tree group, a specific species can be attributed which is represented by species-specific model parameters.
-\subsection{Observation}
+\subsubsection{Observation}
 The MANGA model allows to continuously register all state variables listed above.
 Typically, \textit{flora} state variables such as tree position, information on tree allometry and tree age are monitored at each BETTINA time step.
 The porewater salinity can be monitored with arbitrarily fine temporal resolution.
 All output files can be visualized and analyzed externally.
 
-\section*{Details}
-\addcontentsline{toc}{section}{Details}  
-\section{Initialization}
+<<<<<<< HEAD
+\subsection*{Details}
+\addcontentsline{toc}{subsection}{Details}  
+\subsubsection{Initialization}
+
 \begin{enumerate}
 \item Established trees have set initial allometric measures and species-specific parameters.
 Additionally, arbitrary (random, rows, ...) initial plant distribution can be chosen.
 \item On the \textit{land} level, OpenGeoSys is initialized by a set of abiotic parameter fields combined with initial- and boundary conditions.
 \end{enumerate}
-\section{Input}
+
+\subsection{Input}
 External perturbations to the abiotic dynamics such as tidal flooding or sea level rise or extreme weather events can be accounted for by means of time dependent boundary conditions.
 Additionally, perturbations to the biosphere can be defined (logging, fire). 
-\section{Submodels}
-\subsection{Model Components}
+\subsection{Submodels}
+\subsubsection{Model Components}
 Key innovation of MANGA is the dynamic coupling of the two independent models OpenGeoSys and BETTINA.
 On the one hand, information of the \textit{flora} is passed to the abiotic processes by means of boundary conditions defined in the tree root regions.
 On the other hand, the \textit{flora} dynamics are directly influenced by the dynamic porewater salinity distribution, which is passed to BETTINA from the OpenGeoSys output.\\
@@ -241,7 +274,8 @@ BETTINA and OpenGeoSys are implemented as modules to the MANGA model.
 Hence, both modules can be used independently or replaced readily.
 The modular coupling scheme is sketched in \citet{Bathmann2020}.
 
-\subsection{Flora}
+
+\subsubsection{Flora}
 The individual growth of the plant and the distribution onto the different plant components is the heart of BETTINA.
 In general, tree growth has a deterministic description and depends on the tree allometry, tree environment and the available resources.
 
@@ -408,7 +442,11 @@ $k_{\text{growth}}$ & maintenance factor & \SI{1.4e-6}{} \\
 \end{tabular} 
 \caption{Parameters for the BETTINA module.}\label{tab_bettina_parameter}
 \end{table}
+<<<<<<< HEAD
 \subsection{Land}
+=======
+\paragraph{Land}
+>>>>>>> changed for diss
 The assumption of saturated groundwater flow is made for the whole aquifer domain.
 
 The abiotic subsurface processes are described by solving a system of PDEs on a grid. The equations describing the system dynamics consist of one equation describing the total groundwater mass flow 
@@ -468,7 +506,7 @@ $g$ & gravitation constant & $9.81 \frac{1}{ms^2}$ \\
 \end{tabular} 
 \caption{Parameters for the OpenGeoSys module.}
 \end{table}
-\bibliographystyle{apalike}
-\bibliography{bibtex.bib}
-\end{document}
+%\bibliographystyle{apalike}
+%\bibliography{bibtex.bib}
+%\end{document}
 
