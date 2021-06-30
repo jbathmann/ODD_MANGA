@@ -66,8 +66,8 @@ Motivation and general derivation of the model are provided in the course of thi
 %\author[1,3]{Fabien Magri}
 %\author[1,2]{Marc Walther}
 %\author[1,2]{Olaf Kolditz}
-The author JB contributed to all parts of the article presented below.
-The author drafted the text and derived the equation system of the text and coordinated the revision and editing process with the co-authors. Furthermore, the author implemented the presented model and coordinated further joint code developments, version control and code review processes.
+The author JB contributed to all parts of the protocol presented below.
+The author drafted the text and derived the equation system of the groundwater flow model and coordinated the revision and editing process with the co-authors. Furthermore, the author implemented the presented model and coordinated further joint code developments, version control and code review processes.
     
     \section{Copyright Notice}
     
@@ -78,7 +78,8 @@ The author drafted the text and derived the equation system of the text and coor
     \clearpage
     
 
-\subsection{The pyMANGA ODD }
+
+\section{The pyMANGA ODD }
 This chapter is a standard ODD protocol for agent-based model documentation following the description in \citet{Grimm2020}.
 \subsection{Overview}
 \subsubsection{Purpose and Patterns}
@@ -251,7 +252,6 @@ Typically, \textit{flora} state variables such as tree position, information on 
 The porewater salinity can be monitored with arbitrarily fine temporal resolution.
 All output files can be visualized and analyzed externally.
 
-<<<<<<< HEAD
 \subsection*{Details}
 \addcontentsline{toc}{subsection}{Details}  
 \subsubsection{Initialization}
@@ -442,11 +442,8 @@ $k_{\text{growth}}$ & maintenance factor & \SI{1.4e-6}{} \\
 \end{tabular} 
 \caption{Parameters for the BETTINA module.}\label{tab_bettina_parameter}
 \end{table}
-<<<<<<< HEAD
-\subsection{Land}
-=======
-\paragraph{Land}
->>>>>>> changed for diss
+
+\subsubsection{Land}
 The assumption of saturated groundwater flow is made for the whole aquifer domain.
 
 The abiotic subsurface processes are described by solving a system of PDEs on a grid. The equations describing the system dynamics consist of one equation describing the total groundwater mass flow 
