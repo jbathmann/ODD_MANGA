@@ -33,28 +33,31 @@
 }
 \ead{Jasper.Bathmann@ufz.de}
 \author[3]{Ronny Peters}
-\author[1]{Dmitri Naumov}
-\author[1]{Thomas Fischer}
+\author[4]{Ruth Reef}
 \author[3]{Uta Berger}
 \author[1,2]{Marc Walther}
+\author[5]{Catherine E. Lovelock}
 
 \cortext[cor1]{Corresponding author: Jasper.Bathmann@ufz.de}
 
 \address[1]{Department of Environmental Informatics, UFZ, Permoserstra\ss e 15, 04318 Leipzig, Germany}
 \address[2]{Institute for Groundwater Management, Technische Universit\"at Dresden, 01069 Dresden, Germany}
 \address[3]{Institute of Forest Growth and Forest Computer Sciences, Technische Universit\"at Dresden, 01069 Dresden, Germany}
+\address[4]{School of Earth Atmosphere and Environment, MONASH University, Clayton VIC 3800, Australia}
+\address[5]{School of Biological Sciences, The University of Queensland, St Lucia QLD 4072, Australia}
 
-\journal{Ecological Modelling}
-\date{January 2019}                                           % Activate to display a given date or no date
+\journal{Agricultural Forest Meteorology}
+\date{April 2021}                                           % Activate to display a given date or no date
 
 \begin{document}
 \maketitle 
 This document is a standard ODD protocol for agent-based model documentation following the description in \citet{Grimm2020}.
 \tableofcontents
-\section{Overview}
-\subsection{Purpose and Patterns}
-Characteristic mangrove growth form structures and species zonation patterns along transects in the intertidal zone are observed. 
-To study how those patterns depend on groundwater salinity, MANGA is introduced.
+\section*{Overview}
+\addcontentsline{toc}{section}{Overview}  
+\section{Purpose and Patterns}
+Characteristic mangrove growth form structures and species zonation patterns along transects in the intertidal zone are observed.
+To study how those patterns interact with groundwater salinity and depend on abiotic hydrological boundary conditions, MANGA is introduced.
 It is an agent-based mangrove stand dynamics model which couples the single-tree model BETTINA \citep{Ronny2014} for tree growth dynamics and the subsurface hydrodynamic model OpenGeoSys (www.opengeosys.org).
 The purpose of the coupled model is to analyze and understand the two-way feedback between porewater salinity and tree (fresh-)water use.
 From abiotic boundary conditions like groundwater gradients and salt dilution by tidal water, emerge vegetation patterns like zonation of species composition or allometric manifestation of the trees (i.e.~dwarfing).
@@ -63,7 +66,7 @@ Additionally, the spatial and temporal groundwater salinity distribution can be 
 
 
 
-\subsection{Entities, state variables and scales}
+\section{Entities, state variables and scales}
 The MANGA model is using two already existing models as components.
 The process variables and scales can be classified in two distinct levels.
 
@@ -73,13 +76,13 @@ Porewater salinity dynamics are calculated with OpenGeoSys (www.opengeosys.org).
 \textit{Land} is the name for this level.
 
 The two levels differ in time stepping and spatial scales as well as in their state variables and will be described in detail below.
-\subsubsection{Flora}
+\subsection{Flora}
 The \textit{flora} consists of individual trees - the entities which are used as agents.
 Every entity within the population is described by its static position ($x$, $y$), static species, dynamic age and dynamic allometry.
 Allometry information includes stem radius, stem height, root radius and crown radius.
-The full set of variables required to parameterize individual trees is listed in table \ref{tab_bettina_variables}.
+The full set of state variables defining the individual tree is listed in table \ref{tab_bettina_variables}.
 Typical sizes of individuals are in the range of meters, whereas the whole \textit{flora} can be positioned within continuous spatial scales ranging from $\mathrm{m^2}$ to $\mathrm{km^2}$, such that mangrove stand dynamics can be studied.
-The \textit{flora} dynamics are simulated in time-steps in the range from weeks to years.
+The \textit{flora} dynamics are simulated in time-steps in the range from days up to one year.
 Within this time stepping, tree growth dynamics is satisfyingly resolved.
 \begin{table}[h]
 \centering
@@ -101,17 +104,18 @@ $t_T$ & tree age  & \SIrange{0.1}{10.0}{m} \\
 $\vec{r}$ & tree position  &   \\ 
 \hline 
 \end{tabular} 
-\caption{Variables of individual trees. All listed variables are floating point numbers.}\label{tab_bettina_variables}
+\caption{State variables of individual trees.
+All listed variables are floating point numbers.}\label{tab_bettina_variables}
 \end{table}
-\subsubsection{Land}
+\subsection{Land}
 The \textit{land} is representing the soil on which trees grow.
 Two scalar variables, porewater salinity and hydrostatic pressure, are defined on a three dimensional abiotic aquifer system and one 3 dimensional vector field of secondary variables represents the Darcy velocity.
 Considered aquifer depths are in the range of $\mathrm{m}$, corresponding to the depth of subsurface layers with relatively high water permeability.
 The horizontal system extension can range from $\mathrm{m^2}$ to $\mathrm{km^2}$ but must be larger or equal than the \textit{flora} extension in order to allow to study tree population dynamics.
 The abiotic processes are simulated on timescales ranging from \SI{1e-2}{s} to \SI{1e5}{s} depending on the rate of change in variables.
 
-\subsection{Process Overview and Scheduling}
-\subsubsection{Model Components} 
+\section{Process Overview and Scheduling}
+\subsection{Model Components} 
 Two independent models, BETTINA for \textit{flora} and OpenGeoSys for \textit{land}, are coupled.
 The information of state variables and parameters of \textit{flora} is passed to OpenGeoSys with the time stepping from the \textit{flora} model.
 The \textit{land} model uses this information to dynamically update the \textit{flora's} influence on the abiotic processes, namely fresh water flow from the aquifer into the plants (i.e.~plant water uptake).
@@ -119,7 +123,7 @@ The water uptake is controlled by the osmotic potential, and thereby by porewate
 Porewater salinity is one of the two variables for the hydrodynamic model OpenGeoSys.
 
 The OpenGeoSys software to uses a finer time stepping on scales, where state variables of the \textit{flora} can be regarded as constant.
-After solving the abiotic processes, the information of porewater salinity distribution in high temporal resolution is passed to BETTINA which uses the information on average available resources to update the \textit{flora}.
+After solving the abiotic processes, the updated information of current porewater salinity distribution in high temporal resolution is passed to BETTINA which uses the information on average available resources to update the \textit{flora}.
 The new \textit{flora} state is passed back to OpenGeoSys.
 Consequently, long time simulations are performed using the iteration over the subsequent cycle of
 \begin{enumerate}
@@ -127,7 +131,7 @@ Consequently, long time simulations are performed using the iteration over the s
 \item OpenGeoSys calculations.
 
 \end{enumerate}
-\subsubsection{Flora}
+\subsection{Flora}
 Dynamics on the \textit{flora} level are described by four sub-models.
 A sketch of BETTINA inherent plant dynamics is given in Figure \ref{fig_bettina_sketch}.
 \begin{figure}[h]\centering
@@ -135,23 +139,25 @@ A sketch of BETTINA inherent plant dynamics is given in Figure \ref{fig_bettina_
 \caption{Sketch of iteration cycle for \textit{flora} dynamics modelled with BETTINA. Illustration is adapted from \citet{Ronny2014}--(supplementary material).}\label{fig_bettina_sketch}
 \end{figure} 
 
-The first sub-model predicts the penalty of aboveground competition on light interception using a modified \textbf{Z}one \textbf{o}f \textbf{I}nfluence (ZOI, \citet{Berger2000}) approach.
-The second simulates the above and belowground resource uptake of individual trees and depends on the calculated penalties, porewater salinity and tree allometry.
-Subsequently, depending on the current tree volume, the third submodule calculates how much resources are required for tree maintenance.
-If the amount of resource demanded for tree maintenance exceeds the resource availability, trees eventually die.
-For surviving trees, the submodel also determines the amount of resources available for tree growth.
-Finally, the fourth sub-model calculates tree growth, e.g.~it updates the tree allometry according to resource availability.
+The first sub-model ("Competition" in fig. 1) predicts the penalty of aboveground competition on light interception using a modified \textbf{Z}one \textbf{o}f \textbf{I}nfluence (ZOI, \citet{Gates1978}) approach with complete asymmetric competition \citep{Schwinning1998}.
+The second sub-model ("Resistances" and "Resources" in fig. 1) simulates the above- and belowground resource uptake of individual trees and depends on the calculated shading penalties, porewater salinity and tree allometry.
+Subsequently, depending on the current tree volume, the third sub-model ("Volume of Plant Components" and "Maintenance of Biomass" in fig. 1) calculates how much resources are required for tree maintenance.
+The surplus of available resources determines the amount of resources available for tree growth ("Growth" in fig. 1). 
+Finally, the fourth sub-model ("Increase of Allometric Measures" in fig. 1) distributes tree growth to an increase of the allometric measures, e.g. it updates the tree's state variables.
+The growth is distributed according to maintain a constant proportion of light and water availability ("Weights" in fig. 1).
+If resources for growth are negative (i.e., the amount of resource demanded for tree maintenance exceeds the resource availability), trees eventually die ("Death" in fig. 1).
 At each time step all four sub models are applied in a sequence (see sub-models part for details): 
 \begin{enumerate}
 \item aboveground competition
-\item belowground resource uptake
-\item tree maintenance and growth resource availability (changes in tree geometry)
-\item tree growth and death (changes in population)
+\item resource uptake
+\item biomass maintenance and resources for growth
+\item tree growth and death
 \end{enumerate}
-Beside the porewater salinity distribution, the sub-models depend on species-specific parameters such as: minimal leaf water potential, sap flow conductivity, fine root permeability, geometrical factor, maintenance factor, ratio of available resources to tree growth volume, tree mortality, photosynthesis energy efficiency, and three factors describing the tendency for equilibria in (i) resource uptake, (ii) flow resistances and (iii) tree crown and root disk size.
+Beside the porewater salinity distribution, the sub-models depend on species-specific parameters such as minimal leaf water potential, sap flow conductivity (xylem conductivity), fine root permeability, a geometrical factor for fine root surface per area of root extension, maintenance factor, ratio of available resources used for production of new biomass, and photosynthesis energy efficiency (light-water-ratio), and three factors describing the tendency for equilibria in (i) resource uptake, (ii) flow resistances and (iii) tree crown and root disk size.
 Those parameters will be explained in detail in the sub-model section.
-\subsubsection{Land}
-The abiotic subsurface processes are described by solving a system of PDEs on a grid. The equations describing the system dynamics consist of one equation describing the total groundwater mass flow and one describing the subsurface salinity mass flow.
+\subsection{Land}
+The abiotic subsurface processes are described by solving a system of PDEs on a grid with OpenGeoSys (www.opengeosys.org).
+The equations describing the system dynamics consist of one equation describing the total groundwater mass flow and one describing the subsurface salinity mass flow.
 System boundary conditions, temporal resolution and the method to solve the equations are also provided within project files.
 The tree entities provide additional source terms in the root zone, which depend on state variables and parameters of the \textit{flora}, controlling the water uptake of the trees (see belowground resource uptake).
 \section{Design Concepts}
@@ -193,7 +199,7 @@ However, individual trees adapt to environmental conditions (see adaption).
 Prediction of future conditions by individuals is not implemented.
 \subsection{Sensing}
 Individuals within the \textit{flora} get information on the locally available resources.
-Resource availability is results from the interactions and competition within the local neighborhood and the porewater salinity distribution.
+Resource availability results from the interactions and competition within the local neighborhood and the porewater salinity distribution.
 \subsection{Interaction}
 Individual trees compete for sunlight.
 This competition is described in a simplified manner using a modified ZOI competition concept. 
@@ -203,11 +209,11 @@ At locations, where a tree is the highest, this individual takes all available e
 
 Competition for belowground resources is emerging from the subsurface flow and dilution processes.
 \subsection{Stochasticity}
-Within the MANGA model, stochasticity is limited to the initial seedling distribution.
+Within the MANGA model, stochasticity is limited to the initial seedling distribution and positioning of new seedlings (recruitment).
 Further stochasticity can be incorporated by stochastic boundary conditions, e.g. the representation of rarely occurring extreme weather events such as hurricanes.
 \subsection{Collectives}
 Tree entities can be arbitrarily grouped in any kind of collective at the stage of model initialization. 
-However, each tree group can be associated to a sub domain of the model area, where it is allowed to grow.
+However, each tree group can be associated to a sub-domain of the model area, where it is allowed to grow.
 Additionally, for each tree group, a specific species can be attributed which is represented by species-specific model parameters.
 \subsection{Observation}
 The MANGA model allows to continuously register all state variables listed above.
@@ -215,19 +221,19 @@ Typically, \textit{flora} state variables such as tree position, information on 
 The porewater salinity can be monitored with arbitrarily fine temporal resolution.
 All output files can be visualized and analyzed externally.
 
-
-\section{Details}
-\subsection{Initialization}
+\section*{Details}
+\addcontentsline{toc}{section}{Details}  
+\section{Initialization}
 \begin{enumerate}
 \item Established trees have set initial allometric measures and species-specific parameters.
 Additionally, arbitrary (random, rows, ...) initial plant distribution can be chosen.
 \item On the \textit{land} level, OpenGeoSys is initialized by a set of abiotic parameter fields combined with initial- and boundary conditions.
 \end{enumerate}
-\subsection{Input}
+\section{Input}
 External perturbations to the abiotic dynamics such as tidal flooding or sea level rise or extreme weather events can be accounted for by means of time dependent boundary conditions.
 Additionally, perturbations to the biosphere can be defined (logging, fire). 
-\subsection{Submodels}
-\subsubsection{Model Components}
+\section{Submodels}
+\subsection{Model Components}
 Key innovation of MANGA is the dynamic coupling of the two independent models OpenGeoSys and BETTINA.
 On the one hand, information of the \textit{flora} is passed to the abiotic processes by means of boundary conditions defined in the tree root regions.
 On the other hand, the \textit{flora} dynamics are directly influenced by the dynamic porewater salinity distribution, which is passed to BETTINA from the OpenGeoSys output.\\
@@ -235,7 +241,7 @@ BETTINA and OpenGeoSys are implemented as modules to the MANGA model.
 Hence, both modules can be used independently or replaced readily.
 The modular coupling scheme is sketched in \citet{Bathmann2020}.
 
-\subsubsection{Flora}
+\subsection{Flora}
 The individual growth of the plant and the distribution onto the different plant components is the heart of BETTINA.
 In general, tree growth has a deterministic description and depends on the tree allometry, tree environment and the available resources.
 
@@ -255,27 +261,32 @@ C_S = 1-\frac{\sum_i 0^{N^{\text{taller}}_i} A_i}{\sum_i A_i},
 with $A_i$ being the fraction of crown area associated to mesh node $i$.
 \end{enumerate}
 \paragraph{\textbf{Resource Uptake}}
-For resource uptake, Darcy's law for laminar flow is applied to calculate (fresh-)water flow $Q$ from the roots to the canopy
+For resource uptake, Darcy's law for laminar flow is applied to calculate maximum (fresh-)water flow $Q$ from the roots to the canopy
 \begin{align}
 Q = -\frac{\Psi_{\text{leaf}}- \Psi_{\text{h}} -\Psi_{\text{osmo}}}{R_1 + R_2}
 \end{align}
 with hydrostatic potential gradient $\Delta \Psi$ and flow resistances $R_i$.
-The hydrostatic potential consists of the minimal leaf potential $\Psi_{\text{leaf}}$, the osmotic potential 
+The hydrostatic potential consists of the minimal leaf potential $\Psi_{\text{leaf}}$ (species-specific parameter), the osmotic potential 
 \begin{align}
-\Psi_{\text{osmo}}= -\SI{8500}{\frac{m^2}{s}}S,
+\Psi_{\text{osmo}}= -\SI{85000}{\frac{m^2}{s}}S,
 \end{align}
 with porewater salinity $S(t)$ and the height potential 
 \begin{align}
-\Psi_h = \rho_R g (r_C+h_S).
+\Psi_h = \rho_R g (2r_C+h_S).
 \end{align}
 The resistance $R = R_1+R_2$ consists of
 \begin{align}
 R_1 &= \frac{1}{L_p k_g \pi r_R^2 h_R} ,\end{align}
-which represents the flow resistance through the fine roots and 
+with root thickness $h_r$, species-specific root surface permeability $L_p$ and geometrical factor $k_g$.
+The equation represents the flow resistance through the fine roots and 
 \begin{align}
 R_2 &= \frac{l_{\text{flow}}}{k_f \pi r_S^2}.
 \end{align}
-representing the resistance along the flow path through the trees cable roots, stem and branches.
+representing the resistance along the flow path through the trees cable roots, stem and branches (with species-specific xylem conductivity $k_f$).
+The flow length $l_{\text{flow}}$ reads,
+\begin{align}
+l_{\text{flow}} = 2 r_c + h_c + \sqrt{\frac{1}{2}} r_r
+\end{align}
 Both resistances depend on the current tree allometry.
 
 Integration of mass flow $Q$ from start time $t_1$ of the current time step to its final time $t_2$ normalized to the daily cycle provides the total uptake of belowground resources for each tree during the time step:
@@ -285,9 +296,9 @@ RES_B = \int_{t_1}^{t_2} \frac{Q}{\pi} \mathrm{d}t.
 Without the sinusoidal pattern daily transpiration values are overestimated. Since we want to estimate a realistic feedback on porewater, we included an improved quantification of daily water fluxes \citep{Peters2020}.
 Calculation of available aboveground resources reads
 \begin{align}
-RES_A = \int_{t_1}^{t_2} (1-C_S) R_S \pi r_C^2 \mathrm{d}t,
+RES_A = \int_{t_1}^{t_2} (1-C_S) S_e R_S \pi r_C^2 \mathrm{d}t,
 \end{align}
-with the calculated shadowing coefficient $C_S$ and solar constant $R_S$.
+with the calculated shadowing coefficient $C_S$, solar photosynthesis energy efficiency ($S_e$ and solar constant $R_S$.
 Finally, the total available resources are either limited by solar energy or by available fresh water:
 \begin{align}
 RES_{\text{available}} = \text{min}\left(RES_A, RES_B\right).
@@ -301,9 +312,9 @@ RES_{\text{growth}} = RES_{\text{available}} - k_m V_{\text{tree}}
 depend on the difference of available resources and maintenance cost.
 Maintenance factor $k_m$ denotes the species-specific maintenance cost per tree volume $V_{\text{tree}}$.
 \paragraph{\textbf{Growth and Death}}
-All individual trees for which the resources available for growth are smaller than a species-specific death level $l_d$, meaning
+All individual trees for which the resources available for growth are smaller than a species-specific death level $k_{grow}$, meaning
 \begin{align}
-l_d > RES_{\text{growth}},
+k_{grow} > RES_{\text{growth}},
 \end{align}
 die and do not longer persist in the model.
 Surviving trees allocate the resources available for growth in order to optimize resource uptake.
@@ -322,7 +333,7 @@ Assuming, if the crown radius is bigger than the root radius, above-ground compe
 With these auxiliary variables, the growth weights are estimated by means of sigmoidal estimators as
 \begin{itemize}
 \item the weight for increasing stem height $h_s$ as 
-$\omega_h = \frac{\omega_1}{1 + \exp\left(-\frac{q_{rad}}{\sigma_2}\right)}$,
+$\omega_h = \frac{1}{1 + \exp\left(-\frac{q_{rad}}{\sigma_2}\right)}$,
 \item the weight for increasing crown radius $r_c$ as 
 $\omega_c = \frac{1 - \omega_h}{1 + \exp\left(-\frac{q_{res}}{\sigma_1}\right)}$,
 \item the weight for increasing stem radius $r_s$ as 
@@ -331,9 +342,9 @@ $\omega_s = \frac{1 - \omega_h-\omega_c}{1 + \exp\left(-\frac{q_r}{\sigma_1}\rig
 $\omega_r = 1 - \omega_h-\omega_c - \omega_s$.
 \end{itemize}
 \textbf{Growth} is performed using the remaining resources for a specific increase of biomass (volume).
-The allometric relations allow for a calculation of the increase in respective measures which follows as increment of
+The allometric relations allow for a calculation (derivation in \citet{Ronny2014}) of the increase in respective measures which follows as increment of
 \begin{itemize}
-\item stem height $\Delta h_s = \frac{\omega_h }{\pi r_s^2}\cdot RES_{\text{growth}}$,
+\item stem height $\Delta h_s = \frac{\omega_h }{\pi^2 r_s^2}\cdot RES_{\text{growth}}$,
 \item stem radius $\Delta r_s = \frac{\omega_s}{2\pi r_s l_f}\cdot RES_{\text{growth}}$,
 \item crown radius $\Delta r_c = \frac{\omega_c }{2\pi \left(r_c h_c + r_s^2\right)}\cdot RES_{\text{growth}}$ and
 \item root radius $\Delta r_r = \frac{\omega_r}{2 \pi r_r h_r + \pi \frac{r_s^2}{\sqrt{2}}}\cdot RES_{\text{growth}}$.
@@ -397,7 +408,7 @@ $k_{\text{growth}}$ & maintenance factor & \SI{1.4e-6}{} \\
 \end{tabular} 
 \caption{Parameters for the BETTINA module.}\label{tab_bettina_parameter}
 \end{table}
-\subsubsection{Land}
+\subsection{Land}
 The assumption of saturated groundwater flow is made for the whole aquifer domain.
 
 The abiotic subsurface processes are described by solving a system of PDEs on a grid. The equations describing the system dynamics consist of one equation describing the total groundwater mass flow 
@@ -430,15 +441,7 @@ The fresh water mass density flow reads
 \begin{equation}
 q_f = - \frac{\rho_R}{\pi r_R^2 r_D}\left(\frac{\Psi_{\text{leaf}} - \Psi_{\text{h}}-\Psi_{\text{osmo}}}{R_1+R_2}\right),
 \end{equation}
-with
-\begin{align}
-\Psi_{\text{leaf}}&=\Psi_{\text{leaf}}\\
-\Psi_{\text{h}}&=h_S g \rho_R \\
-\Psi_{\text{osmo}}& = -\SI{85000}{\frac{m^2}{ s^2}} S,
-\\
-\end{align}
-with $S$ denoting porewater salinity and $l_{\text{flow}}$ denoting flow length from the fine roots to the leafs.
-Formulas for the resistances $R_1$ and $R_2$ are given above.
+Formulas for the resistances $R_1$ and $R_2$ as well as the individual potentials are given above.
 The parameters for this boundary condition are directly taken from the last BETTINA time step.
 \begin{table}[h] \label{tab_ogs_parameter}\centering
 \begin{tabular}{|c|c|c|}
